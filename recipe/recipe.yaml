@@ -9,15 +9,12 @@ source:
   - url: https://github.com/hatchet-dev/hatchet/archive/refs/tags/v${{ version }}.tar.gz
     sha256: 2fd47e6271934e71c8cf75387f4cefe8d3fff8ecc49d7aab52562d931aa9f0c6
     target_directory: src
-  - url: https://raw.githubusercontent.com/mattn/go-localereader/6bae6c923850ab5e0da9f36f69811ffe17064228/LICENSE
-    sha256: dceede03550621e65ec7b79fcba87cf6dbb9d31132a8ae71a8fe8ceec0af7da3
-    file_name: LICENSE-go-localereader
 
 build:
   number: 0
   script:
     - cd src/cmd/hatchet-cli
-    - go-licenses save . --save_path ../../../library_licenses --ignore github.com/mattn/go-localereader
+    - go-licenses save . --save_path ../../../library_licenses
     - if: unix
       then: go build -v -o $PREFIX/bin/hatchet -ldflags="-s -w"
       else: go build -v -o %LIBRARY_BIN%\hatchet.exe -ldflags="-s"
@@ -47,7 +44,6 @@ about:
   license_file:
     - src/LICENSE
     - library_licenses/
-    - LICENSE-go-localereader
   documentation: https://docs.hatchet.run/cli
   repository: https://github.com/hatchet-dev/hatchet
 
