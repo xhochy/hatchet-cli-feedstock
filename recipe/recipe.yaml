@@ -14,7 +14,13 @@ build:
   number: 1
   script:
     - cd src/cmd/hatchet-cli
-    - go-licenses save . --save_path ../../../library_licenses
+    - go-licenses save . --save_path ../../../library_licenses --ignore github.com/mattn/go-localereader
+    - if: win
+      then: |
+        for /f "delims=" %%i in ('dir /s /b %SRC_DIR%\gopath\pkg\mod\github.com\mattn\go-localereader*@v*\LICENSE') do (
+          mkdir %SRC_DIR%\library_licenses\github.com\mattn\go-localereader
+          copy "%%i" %SRC_DIR%\library_licenses\github.com\mattn\go-localereader\LICENSE
+        )
     - if: unix
       then: go build -v -o $PREFIX/bin/hatchet -ldflags="-s -w"
       else: go build -v -o %LIBRARY_BIN%\hatchet.exe -ldflags="-s"
