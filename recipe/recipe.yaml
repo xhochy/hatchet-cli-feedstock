@@ -11,7 +11,7 @@ source:
     target_directory: src
 
 build:
-  number: 0
+  number: 1
   script:
     - cd src/cmd/hatchet-cli
     - go-licenses save . --save_path ../../../library_licenses
